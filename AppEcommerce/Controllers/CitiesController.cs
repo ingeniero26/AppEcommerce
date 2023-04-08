@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AppEcommerce.Classes;
 using AppEcommerce.Models;
 
 namespace AppEcommerce.Controllers
@@ -39,9 +40,18 @@ namespace AppEcommerce.Controllers
         // GET: Cities/Create
         public ActionResult Create()
         {
+            //var departments = db.Departments.ToList();
+            //departments.Add(new Department
+            //{
+            //    DepartmentId = 0,
+            //    Name = "[Select  a deparment]",
+            //});
+            //departments = departments.OrderBy(d => d.Name).ToList();
+
             ViewBag.DepartmentId = new SelectList(
-                db.Departments.OrderBy(d => d.Name),
-                "DepartmentId", "Name");
+                CombosHelper.GetDepartments(),
+                "DepartmentId",
+                "Name");
             return View();
         }
 
@@ -60,7 +70,7 @@ namespace AppEcommerce.Controllers
             }
 
             ViewBag.DepartmentId = new SelectList(
-                db.Departments.OrderBy(d => d.Name),
+                 CombosHelper.GetDepartments(),
                 "DepartmentId", "Name", 
                 city.DepartmentId);
             return View(city);
@@ -78,7 +88,9 @@ namespace AppEcommerce.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(d => d.Name), "DepartmentId", "Name", city.DepartmentId);
+            ViewBag.DepartmentId = new SelectList(
+                 CombosHelper.GetDepartments(),
+                 "DepartmentId", "Name", city.DepartmentId);
             return View(city);
         }
 
@@ -96,7 +108,10 @@ namespace AppEcommerce.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentId = new SelectList(
-                db.Departments.OrderBy(d => d.Name), "DepartmentId", "Name", city.DepartmentId);
+                 CombosHelper.GetDepartments(), 
+                 "DepartmentId",
+                 "Name",
+                 city.DepartmentId);
             return View(city);
         }
 
