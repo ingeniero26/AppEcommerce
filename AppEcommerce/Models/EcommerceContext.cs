@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,10 @@ namespace AppEcommerce.Models
         public EcommerceContext() : base("DefaultConnection")
         {
 
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         //metodo para cerrar la conexion a la base de datos

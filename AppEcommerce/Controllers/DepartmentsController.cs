@@ -51,8 +51,28 @@ namespace AppEcommerce.Controllers
             if (ModelState.IsValid)
             {
                 db.Departments.Add(department);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null &&
+                   ex.InnerException.InnerException != null &&
+                   ex.InnerException.InnerException.Message.Contains("_Index"))
+                    {
+                        ModelState.AddModelError(string.Empty,
+                            "There are a record with the same value");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty,
+                                                ex.Message);
+                    }
+                    
+                }
             }
 
             return View(department);
@@ -111,8 +131,29 @@ namespace AppEcommerce.Controllers
         {
             Department department = db.Departments.Find(id);
             db.Departments.Remove(department);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
             return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                if(ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCES"))
+                {
+                    ModelState.AddModelError(string.Empty,
+                        "The record can't be delete because it has related records");
+
+
+                } else
+                {
+                    ModelState.AddModelError(string.Empty,
+                                            ex.Message);
+                }
+            }
+            return View(department);
+
         }
 
         protected override void Dispose(bool disposing)

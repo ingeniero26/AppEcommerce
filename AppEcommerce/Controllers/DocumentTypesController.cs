@@ -51,8 +51,29 @@ namespace AppEcommerce.Controllers
             if (ModelState.IsValid)
             {
                 db.DocumentTypes.Add(documentType);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+
+                    if (ex.InnerException != null &&
+                   ex.InnerException.InnerException != null &&
+                   ex.InnerException.InnerException.Message.Contains("REFERENCES"))
+                    {
+                        ModelState.AddModelError(string.Empty,
+                           "There are a record with the same value");
+
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty,
+                                                ex.Message);
+                    }
+                }
             }
 
             return View(documentType);

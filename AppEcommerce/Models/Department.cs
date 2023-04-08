@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,7 @@ namespace AppEcommerce.Models
             "The field {0} can contain maximun {1} and minimum {2} characters",
             MinimumLength = 5)]
         [Display(Name = "Department")]
+        [Index("Department_Name_Index", IsUnique = true)]
         public string Name { get; set; }
 
         public virtual ICollection<City> Cities { get; set; }
