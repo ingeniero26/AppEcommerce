@@ -23,5 +23,10 @@ namespace AppEcommerce.Models
         public int DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }
+        //lado uno de la relacion
+
+        public virtual ICollection<Company> Companies { get; set; }
+
+        //
     }
 }

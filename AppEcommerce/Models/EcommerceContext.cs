@@ -29,5 +29,7 @@ namespace AppEcommerce.Models
         public System.Data.Entity.DbSet<AppEcommerce.Models.City> Cities { get; set; }
 
         public System.Data.Entity.DbSet<AppEcommerce.Models.DocumentType> DocumentTypes { get; set; }
+
+        public System.Data.Entity.DbSet<AppEcommerce.Models.Company> Companies { get; set; }
     }
 }

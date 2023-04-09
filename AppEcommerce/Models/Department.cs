@@ -19,7 +19,11 @@ namespace AppEcommerce.Models
         [Display(Name = "Department")]
         [Index("Department_Name_Index", IsUnique = true)]
         public string Name { get; set; }
-
+        //Coleccion de ciudades
         public virtual ICollection<City> Cities { get; set; }
+
+        //coleccion de empresas
+
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }
